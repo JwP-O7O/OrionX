@@ -1,0 +1,4 @@
+--- GREENWHEELS HIT CHECK ---
+Actieve Super-Edges (GreenWheels): 0
+Hoogste Edge %: 0.00%
+Meest waardevolle asset: Geen actieve asset binnen drempel

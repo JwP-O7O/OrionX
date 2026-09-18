@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>OrionX Cockpit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<style>
+:root{--bg:#0a0e1a;--card:#121a2e;--acc:#4f8cff;--txt:#e8ecf6;--mut:#8b95ad}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font:15px/1.5 system-ui,sans-serif;padding:20px;max-width:1100px;margin:auto}
+h1{font-size:22px;margin-bottom:14px}
+h1 span{color:var(--acc)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px}
+.kpi{background:var(--card);border:1px solid #1d2947;border-radius:12px;padding:16px}
+.kpi b{display:block;font-size:26px;color:var(--acc)}
+.kpi small{color:var(--mut)}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid #1d2947;font-size:13px}
+th{color:var(--mut);font-weight:600}
+.badge{padding:2px 9px;border-radius:12px;font-size:11px;background:#1d2947}
+.b-actief{color:#7ee2a8}.b-opgezegd{color:#ff9b9b}
+.row{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+input,button{padding:9px 12px;border-radius:8px;border:1px solid #2a3a5f;background:#0d1424;color:var(--txt)}
+button{cursor:pointer;background:var(--acc);border:0;font-weight:600}
+a.dl{color:var(--acc);text-decoration:none;font-size:13px}
+section{margin-bottom:26px}
+h2{font-size:16px;margin-bottom:8px;color:var(--mut)}
+#login{max-width:340px;margin:100px auto;text-align:center}
+#login input{width:100%;margin-bottom:10px}
+</style>
+</head>
+<body>
+<div id="login">
+  <h1>Orion<span>X</span> Cockpit</h1>
+  <input id="tok" type="password" placeholder="Admin-token" onkeydown="if(event.key==='Enter')go()">
+  <button onclick="go()">Login</button>
+</div>
+<div id="app" style="display:none">
+  <div class="row"><h1 style="margin:0">Orion<span>X</span> Cockpit</h1>
+    <span style="flex:1"></span>
+    <a class="dl" href="#" onclick="csv()">⬇ leads.csv</a>
+    <button onclick="load()">Ververs</button></div>
+  <div class="kpis">
+    <div class="kpi"><b id="mrr">–</b><small>MRR (indicatief)</small></div>
+    <div class="kpi"><b id="tlead">–</b><small>leads totaal</small></div>
+    <div class="kpi"><b id="d24">–</b><small>leads 24u</small></div>
+    <div class="kpi"><b id="tsub">–</b><small>abonnees</small></div>
+  </div>
+  <div id="feats" style="color:var(--mut);font-size:12px;margin-bottom:16px"></div>
+  <section><h2>Abonnees</h2><div id="subs"></div></section>
+  <section><h2>Leads ( recent )</h2><div id="leads"></div></section>
+</div>
+<script>
+let T = sessionStorage.getItem('ox_adm') || '';
+async function go(){ T = document.getElementById('tok').value; sessionStorage.setItem('ox_adm', T); await load(); }
+async function api(p){
+  const r = await fetch('/api/admin/' + p, { headers: { Authorization: 'Bearer ' + T } });
+  if (r.status === 401) { document.getElementById('app').style.display='none'; document.getElementById('login').style.display='block'; return null; }
+  return r.json();
+}
+async function load(){
+  const d = await api('overview'); if (!d) return;
+  document.getElementById('login').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('mrr').textContent = '€' + d.mrr_eur;
+  document.getElementById('tlead').textContent = d.total_leads;
+  document.getElementById('d24').textContent = d.leads_24h;
+  document.getElementById('tsub').textContent = d.subscribers.length;
+  const f = d.features;
+  document.getElementById('feats').textContent =
+    'billing ' + (f.billing?'✅':'⛔') + ' · webhook ' + (f.webhook?'✅':'⛔') + ' · e-mail ' + (f.email?'✅':'⛔');
+  document.getElementById('subs').innerHTML = d.subscribers.length ?
+    '<table><tr><th>e-mail</th><th>plan</th><th>status</th><th>sinds</th></tr>' +
+    d.subscribers.map(s=>'<tr><td>'+(s.email||'')+'</td><td>'+(s.plan||'')+'</td><td><span class="badge b-'+s.status+'">'+s.status+'</span></td><td>'+(s.since||'').slice(0,10)+'</td></tr>').join('')+'</table>'
+    : '<p style="color:var(--mut)">Nog geen abonnees.</p>';
+  document.getElementById('leads').innerHTML = d.recent_leads.length ?
+    '<table><tr><th>e-mail</th><th>naam</th><th>bron</th><th>datum</th><th></th></tr>' +
+    d.recent_leads.map(l=>'<tr><td>'+l.email+'</td><td>'+(l.name||'')+'</td><td>'+l.source+'</td><td>'+l.ts.slice(0,10)+'</td><td><button style="padding:3px 8px;font-size:11px" onclick="del(\''+l.email+'\')">✕</button></td></tr>').join('')+'</table>'
+    : '<p style="color:var(--mut)">Nog geen leads.</p>';
+}
+async function del(email){
+  await fetch('/api/admin/lead/delete',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+T},body:JSON.stringify({email})});
+  load();
+}
+async function csv(){
+  const r = await fetch('/api/admin/export.csv',{headers:{Authorization:'Bearer '+T}});
+  const b = await r.blob(); const a = document.createElement('a');
+  a.href = URL.createObjectURL(b); a.download='orionx-leads.csv'; a.click();
+}
+if (T) load();
+</script>
+</body>
+</html>

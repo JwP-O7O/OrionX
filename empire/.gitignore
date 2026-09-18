@@ -1,0 +1,6 @@
+stripe_live.env
+*.env
+!deploy_stripe.sh
+data/
+*.log
+rdap_ai.json

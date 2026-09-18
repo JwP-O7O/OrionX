@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OrionX-AI — Jouw autonome AI-operaties team</title>
+<meta name="description" content="OrionX-AI draait je bedrijfsprocessen autonoom: lead-acquisitie, monitoring en billing. Van zondagochtend tot 3 uur 's nachts — zonder dat jij kijkt.">
+<style>
+:root{--bg:#0a0e1a;--card:#121a2e;--acc:#4f8cff;--acc2:#9b5cff;--txt:#e8ecf6;--mut:#8b95ad}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{padding:18px 0;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:800;font-size:22px;letter-spacing:.5px}
+.logo span{color:var(--acc)}
+nav a{color:var(--mut);text-decoration:none;margin-left:22px;font-size:14px}
+nav a:hover{color:var(--txt)}
+.hero{text-align:center;padding:80px 0 60px}
+.hero h1{font-size:44px;line-height:1.15;max-width:760px;margin:0 auto 18px}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--mut);max-width:600px;margin:0 auto 30px;font-size:18px}
+.btn{display:inline-block;background:linear-gradient(90deg,var(--acc),var(--acc2));color:#fff;border:0;border-radius:10px;padding:13px 28px;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin:40px 0}
+.card{background:var(--card);border:1px solid #1d2947;border-radius:14px;padding:26px}
+.card h3{margin-bottom:8px;font-size:18px}
+.card p{color:var(--mut);font-size:14px}
+.icon{font-size:26px;margin-bottom:10px}
+h2.sec{text-align:center;font-size:30px;margin:70px 0 10px}
+.sub{text-align:center;color:var(--mut);margin-bottom:30px}
+.price .card{position:relative}
+.price .eur{font-size:40px;font-weight:800;margin:10px 0}
+.price .eur small{font-size:15px;color:var(--mut);font-weight:400}
+.price ul{list-style:none;margin:16px 0 22px}
+.price li{padding:5px 0;font-size:14px;color:var(--mut)}
+.price li::before{content:"✓ ";color:var(--acc);font-weight:700}
+.pop{position:absolute;top:-11px;right:16px;background:var(--acc2);border-radius:20px;font-size:11px;padding:3px 12px;font-weight:700}
+.signup{background:var(--card);border:1px solid #1d2947;border-radius:14px;padding:30px;max-width:560px;margin:0 auto}
+.signup input,.signup select{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px solid #2a3a5f;background:#0d1424;color:var(--txt)}
+.consent{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--mut);margin:8px 0}
+#msg{margin-top:10px;font-size:14px;min-height:20px}
+.hp{position:absolute;left:-5000px}
+footer{margin:80px 0 40px;text-align:center;color:var(--mut);font-size:13px}
+#chat{max-width:560px;margin:20px auto 0}
+#chatlog{background:#0d1424;border:1px solid #2a3a5f;border-radius:10px;padding:14px;height:180px;overflow-y:auto;font-size:14px;margin-bottom:10px}
+#chatlog b{color:var(--acc)}
+.row{display:flex;gap:8px}
+.row input{flex:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo">Orion<span>X</span>-AI</div>
+  <nav><a href="#pricing">Prijzen</a><a href="#aanmelden">Aanmelden</a><a href="#demo">Live demo</a></nav>
+</header>
+
+<section class="hero">
+  <h1>Het AI-team dat <em>nooit slaapt</em> — van lead tot factuur</h1>
+  <p>OrionX-AI zet autonome agents in die klanten vinden, kwalificeren, onboarding doen en subscriptions innen. Jij opent je cockpit en ziet euro's, geen uren.</p>
+  <a class="btn" href="#aanmelden">Start gratis wachtlijst →</a>
+</section>
+
+<h2 class="sec">Drie agents, één cockpit</h2>
+<p class="sub">Elk abonnement draait zelfhelend op eigen infrastructuur. Mocht een agent vallen, staat hij binnen 60 seconden op.</p>
+<div class="grid">
+  <div class="card"><div class="icon">🎯</div><h3>Hunter — lead-acquisitie</h3><p>Signaleert relevante organisaties, bouwt gekwalificeerde lijsten en zet eerste contactmomenten op met meetbare follow-up.</p></div>
+  <div class="card"><div class="icon">🛡️</div><h3>Pilot — operaties</h3><p>Monitoring, zelfherstel en incident-rapportage over al je services. Echt cijfermateriaal: uptime, latency, acts.</p></div>
+  <div class="card"><div class="icon">💶</div><h3>Ledger — geldstroom</h3><p>Checkout, abonnementsbeheer, dunning en omzetrapportage. Elke factuur gaat automatisch; geen handmatige administratie.</p></div>
+</div>
+
+<h2 class="sec" id="pricing">Prijzen</h2>
+<p class="sub">Maandelijks opzegbaar. Geen setup-kosten.</p>
+<div class="grid price" id="plans"></div>
+
+<h2 class="sec" id="aanmelden">Wees er vroeg bij</h2>
+<p class="sub">Eerste 50 aanmeldingen krijgen 3 maanden 50% korting.</p>
+<div class="signup">
+  <input id="name" placeholder="Naam">
+  <input id="email" type="email" placeholder="Zakelijk e-mailadres" required>
+  <input class="hp" id="company" tabindex="-1" autocomplete="off">
+  <label class="consent"><input type="checkbox" id="consent" checked> Ik wil productupdates ontvangen (afmelden kan altijd)</label>
+  <select id="source">
+    <option value="website">Via deze site</option>
+    <option value="referral">Doorverwezen</option>
+    <option value="linkedin">LinkedIn</option>
+  </select>
+  <button class="btn" style="width:100%;margin-top:8px" onclick="signup()">Zet me op de lijst</button>
+  <div id="msg"></div>
+</div>
+
+<h2 class="sec" id="demo">Praat met de agent</h2>
+<p class="sub">Echt, live, gedraaid door ons platform. Stel een vraag over OrionX.</p>
+<div id="chat">
+  <div id="chatlog"></div>
+  <div class="row"><input id="q" placeholder="Bijv. wat kost Pro en wat krijg ik ervoor?"><button class="btn" onclick="ask()">Verstuur</button></div>
+</div>
+
+<footer>© 2026 OrionX-AI · orionx.ai · info@orionx.ai</footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+async function plans(){
+  const r = await fetch('/api/plans'); const d = await r.json();
+  $('plans').innerHTML = d.plans.map(p=>
+    `<div class="card"><span class="pop">${p.tag}</span><h3>${p.name}</h3>
+    <div class="eur">€${p.eur}<small>/mnd</small></div>
+    <ul>${p.features.map(f=>`<li>${f}</li>`).join('')}</ul>
+    <button class="btn" style="width:100%" onclick="buy('${p.id}')">Kies ${p.name}</button></div>`).join('');
+}
+async function buy(plan){
+  const email = $('email').value.trim();
+  const r = await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan,email})});
+  const d = await r.json();
+  if(d.url){ location.href = d.url; } else { alert(d.error||'afrekenen tijdelijk niet beschikbaar — zet je op de wachtlijst'); $('email').focus(); }
+}
+async function signup(){
+  const body = { name:$('name').value, email:$('email').value, company:$('company').value, source:$('source').value, consent:$('consent').checked };
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(body.email)){ $('msg').textContent='❌ Vul een geldig e-mailadres in'; return; }
+  const r = await fetch('/api/leads',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  $('msg').textContent = r.ok ? '✅ Je staat op de lijst — je hoort van ons.' : '❌ Probeer later opnieuw';
+  if(r.ok){ $('name').value=''; $('email').value=''; }
+}
+async function ask(){
+  const q = $('q').value.trim(); if(!q) return;
+  const log = $('chatlog');
+  log.innerHTML += `<p><b>Jij:</b> ${q}</p>`; log.scrollTop = 1e9; $('q').value='';
+  log.innerHTML += `<p id="typing"><b>OrionX:</b> aan het denken…</p>`;
+  const r = await fetch('/api/ai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:q})});
+  const d = await r.json();
+  document.getElementById('typing').outerHTML = `<p><b>OrionX:</b> ${(d.answer||'agent tijdelijk offline').replace(/</g,'&lt;')}</p>`;
+  log.scrollTop = 1e9;
+}
+plans();
+</script>
+</body>
+</html>
